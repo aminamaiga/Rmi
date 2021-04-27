@@ -1,0 +1,47 @@
+...............................................TP 1 RMI...M1 AIGLE ...AMINATA MAIGA................................
+
+.............................................ORGANISATIONNEL............................................
+
+Le projet est constué de 3 sous projet JAVA
+  1- Pour le Client (TP_RMI_REMOTE_SERVER)
+  2- Pour le Serveur (TP_RMI_REMOTE_CLIENT)
+  3- Contient toutes les interfaces tubs et les classes Séréalisables (TP_RMI_SHARED)
+  
+  -Le troisième est packagé dans un Jar qui est utilisé par le Client et le Serveur
+  jar -cvf SharedRemoteClass.jar fr/umontpellier/tp/*.class
+  
+  -Le fichier SharedRemoteClass.jar est placé dans le repertoire libs du Client et du Serveur.
+  -Le build path du client et du serveur sont configurés pour utiliser ce Jar.
+  -Le fichier pour la gestion des politiques de sécurité est placé à la racine de chaque projet.
+  
+ ................................................COMPILATION ECLIPSE.................................................
+  -Modifier la ligne 9 du fichier Server.java. En remplaçant le path binaire de votre client par le votre.
+   static final String CODEBASE_PATH = "file:C:/Users/HP/eclipse-workspace/TP_RMI_REMOTE_CLIENT/bin/"; (bin du client)
+  
+  -Les fichiers compilés se trouvent dans le répértoire fr/umontpellier/tp/bin de chaque projet
+  
+  ..........................................EXECUTION...............................................................
+  0- S'assurer que le port 1099 est libre, en effte ce port est utilisé par le Registre RMI
+  1- Executer la classe Principale du Serveur. 
+    Vous obtenez le message Server Ready
+  2- Excuter la classe Principale du Client
+      **  Les opérations possibles sont: ** 
+            1- Ajouter un patient. 
+            2- Recherche un Animal par son nom.
+            3- Afficher les patients
+            4- Se désabonner
+            
+ ...........................................EXECUTION BIS (ERROR)..............................................................           
+  En cas d'Erreurs,
+   1- Verifier que le fichier policy est bien présent à la racine des projets (Client et Serveur) avec le contenu suivant:
+       grant{
+				permission java.security.AllPermission;
+				permission java.net.SocketPermission "*:1099", "connect, resolve";
+           };
+           
+   2- Verifier que les chemins sont corrects dans la classe Serveur.java à la ligne 9 et 10.
+   
+      static final String CODEBASE_PATH = "file:C:/Users/HP/eclipse-workspace/TP_RMI_REMOTE_CLIENT/bin/"; (bin du client)
+	  static final String POLICY_PATH = new File("policy").getAbsolutePath(); 
+	   	         
+   

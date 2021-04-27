@@ -1,0 +1,39 @@
+package fr.umfds.TPtestServicesREST2;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+
+@Path("/brainstorms")
+@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+public class BrainstormResource {
+	public final BrainstormDB brainstormDB;
+
+	@Inject
+	public BrainstormResource(BrainstormDB brainstormDB) {
+		this.brainstormDB = brainstormDB;
+	}
+
+	@GET
+	public ArrayList<Brainstorm> getBrainstorms() {
+		ArrayList<Brainstorm> listBrainStorm = brainstormDB.getBrainstorm();
+		Collections.sort(listBrainStorm, NameComparator);
+
+		return listBrainStorm;
+	}
+
+	public static Comparator<Brainstorm> NameComparator = new Comparator<Brainstorm>() {
+
+		public int compare(Brainstorm s1, Brainstorm s2) {
+			String name1 = s1.getNom().toUpperCase();
+			String name2 = s2.getNom().toUpperCase();
+			return name1.compareTo(name2);
+		}
+	};
+}
